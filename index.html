@@ -55,7 +55,7 @@ label{font-size:14px;font-weight:600}.chk{display:flex;gap:8px;font-weight:400;f
 #msg{margin-top:10px;font-weight:700;color:var(--or2)}
 footer{background:#082530;color:#cfe3ea;text-align:center;padding:40px 5vw calc(40px + env(safe-area-inset-bottom,0px));font-size:13px}footer img{height:84px;margin:0 auto 10px;background:#fff;border-radius:14px;padding:4px 10px}
 footer .t{color:#9db6bf}
-.card.story{padding:0;overflow:hidden}.card.story .sb{padding:18px 22px 22px}.card.story .sp{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:var(--sky2)}.card.story .sg{display:flex;gap:6px;padding:8px 22px 0}.card.story .sg img{width:64px;height:64px;object-fit:cover;border-radius:10px;border:1px solid var(--line)}.card.story .dt{font-size:12px;color:var(--mute);margin-top:8px}.card.story .bd{white-space:pre-line}</style>
+.card.story{padding:0;overflow:hidden}.card.story .sb{padding:18px 22px 22px}#storyList{grid-template-columns:repeat(auto-fill,minmax(220px,280px));justify-content:start}.card.story .sp{display:block;width:100%;height:170px;object-fit:cover;background:var(--sky2)}.card.story .sg{display:flex;gap:6px;padding:8px 22px 0}.card.story .sg img{width:64px;height:64px;object-fit:cover;border-radius:10px;border:1px solid var(--line)}.card.story .dt{font-size:12px;color:var(--mute);margin-top:8px}.card.story .bd{white-space:pre-line}</style>
 </head>
 <body>
 <header id="hd">
@@ -168,7 +168,7 @@ $("send").onclick=async()=>{const m=$("msg");
 if(!$("f_name").value||!$("f_contact").value){m.textContent="이름과 연락처를 입력해 주세요 · กรุณากรอกชื่อและช่องทางติดต่อ";return}
 if(!$("f_ok").checked){m.textContent="개인정보 동의가 필요합니다 · กรุณายินยอมนโยบายความเป็นส่วนตัว";return}
 if(!API){const q=`이름: ${$("f_name").value}\n연락처: ${$("f_contact").value}\n관심: ${$("f_type").value}\n\n${$("f_msg").value}`;location.href="mailto:kookod@naver.com?subject="+encodeURIComponent("[Jin Isan Mission] 문의")+"&body="+encodeURIComponent(q);m.textContent="메일 앱이 열립니다 · กำลังเปิดแอปอีเมล";return}
-try{await fetch(API,{method:"POST",mode:"no-cors",body:JSON.stringify({name:$("f_name").value,contact:$("f_contact").value,type:$("f_type").value,message:$("f_msg").value})});m.textContent="감사합니다 · ขอบคุณครับ"}catch(e){m.textContent="전송 실패 · ส่งไม่สำเร็จ"}};
+try{await fetch(API,{method:"POST",mode:"no-cors",body:JSON.stringify({name:$("f_name").value,contact:$("f_contact").value,type:$("f_type").value,message:$("f_msg").value})});m.textContent="감사합니다 · ขอบคุณครับ"}catch(e){const q=`이름: ${$("f_name").value}\n연락처: ${$("f_contact").value}\n관심: ${$("f_type").value}\n\n${$("f_msg").value}`;m.textContent="자동 전송에 실패해 메일 앱을 엽니다 · ส่งอัตโนมัติไม่สำเร็จ กำลังเปิดแอปอีเมล";location.href="mailto:kookod@naver.com?subject="+encodeURIComponent("[Jin Isan Mission] 문의")+"&body="+encodeURIComponent(q)}};
 </script>
 </body>
 </html>
