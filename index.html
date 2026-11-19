@@ -55,7 +55,7 @@ label{font-size:14px;font-weight:600}.chk{display:flex;gap:8px;font-weight:400;f
 #msg{margin-top:10px;font-weight:700;color:var(--or2)}
 footer{background:#082530;color:#cfe3ea;text-align:center;padding:40px 5vw calc(40px + env(safe-area-inset-bottom,0px));font-size:13px}footer img{height:84px;margin:0 auto 10px;background:#fff;border-radius:14px;padding:4px 10px}
 footer .t{color:#9db6bf}
-</style>
+.card.story{padding:0;overflow:hidden}.card.story .sb{padding:18px 22px 22px}.card.story .sp{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:var(--sky2)}.card.story .sg{display:flex;gap:6px;padding:8px 22px 0}.card.story .sg img{width:64px;height:64px;object-fit:cover;border-radius:10px;border:1px solid var(--line)}.card.story .dt{font-size:12px;color:var(--mute);margin-top:8px}.card.story .bd{white-space:pre-line}</style>
 </head>
 <body>
 <header id="hd">
@@ -153,13 +153,13 @@ footer .t{color:#9db6bf}
 <div class="t" style="margin-top:8px">한국 후원자·기도 동역자: jinthaimission.com</div><div class="t">© 2026 · 개인정보 보호정책 / นโยบายความเป็นส่วนตัว</div></footer>
 
 <script>
-const API="";
+const API="https://script.google.com/macros/s/AKfycbzjtpotccN4iNLqCborkejMXAa__-_9kCqq98EZwSfpx28BtOmUucOZ-ri41DCbwSbSSA/exec";
 const sS=[{title:"콘캔에서 만난 사람들 (샘플)",th:"ผู้คนที่เราพบในขอนแก่น",body:"대학생과 주민의 이야기가 여기에 올라옵니다.",tag:"Story"},{title:"현지 목회자 이야기 (샘플)",th:"เรื่องราวของศิษยาภิบาล",body:"이산 교회 지도자들의 목소리.",tag:"Pastor"},{title:"한국과 태국, 얼마나 다를까? (샘플)",th:"ไทย–เกาหลี ต่างกันแค่ไหน?",body:"문화와 일상 이야기.",tag:"Culture"}];
 const sC=[{name:"교회 이름 (샘플)",district:"콘캔 시내",time:"주일 09:30",lang:"태국어",org:"CCT",map:""},{name:"교회 이름 (샘플)",district:"반파이",time:"주일 10:00",lang:"태국어·이산어",org:"독립교회",map:""}];
 const $=i=>document.getElementById(i),esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 let ch=sC;
 const hd=$("hd");addEventListener("scroll",()=>hd.classList.toggle("s",scrollY>40));
-const dS=l=>$("storyList").innerHTML=l.map(s=>`<div class="card"><span class="tag">${esc(s.tag)}</span><h3>${esc(s.title)}${s.th?`<span class="t">${esc(s.th)}</span>`:""}</h3><p>${esc(s.body)}</p></div>`).join("");
+const dS=l=>$("storyList").innerHTML=l.map(s=>{const ph=(s.photos||[]).filter(Boolean);const im=u=>`<img src="${esc(u)}" alt="${esc(s.title)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'">`;return `<div class="card story">${ph[0]?im(ph[0]).replace('<img','<img class="sp"'):""}${ph.length>1?`<div class="sg">${ph.slice(1).map(im).join("")}</div>`:""}<div class="sb"><span class="tag">${esc(s.tag)}</span><h3>${esc(s.title)}${s.th?`<span class="t">${esc(s.th)}</span>`:""}</h3><p class="bd">${esc(s.body)}${s.bodyTh?`<span class="t">${esc(s.bodyTh)}</span>`:""}</p>${s.date?`<div class="dt">${esc(s.date)}</div>`:""}</div></div>`}).join("");
 const dC=()=>{const d=$("dist").value;$("churchList").innerHTML=ch.filter(c=>!d||c.district===d).map(c=>`<div class="card"><h3>${esc(c.name)}</h3><p>${esc(c.district)}<br>예배 · เวลานมัสการ: ${esc(c.time)}<br>언어 · ภาษา: ${esc(c.lang)}</p><span class="tag">${esc(c.org)}</span>${c.map?` <a class="tag" href="${esc(c.map)}">지도 · แผนที่</a>`:""}</div>`).join("")||"<p>등록된 교회가 없습니다 · ยังไม่มีข้อมูล</p>"};
 $("dist").onchange=dC;
 (async()=>{let st=sS;if(API){try{const [a,b]=await Promise.all([fetch(API+"?type=stories").then(r=>r.json()),fetch(API+"?type=churches").then(r=>r.json())]);if(a.length)st=a;if(b.length)ch=b}catch(e){}}
